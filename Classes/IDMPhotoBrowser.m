@@ -593,6 +593,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     _toolbar.backgroundColor = [UIColor clearColor];
     _toolbar.clipsToBounds = YES;
     _toolbar.translucent = YES;
+    _toolbar.tintColor = [UIColor whiteColor];
     [_toolbar setBackgroundImage:[UIImage new]
               forToolbarPosition:UIToolbarPositionAny
                       barMetrics:UIBarMetricsDefault];
@@ -1303,6 +1304,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
             if (photo.caption) [activityItems addObject:photo.caption];
 
             self.activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+            self.activityViewController.excludedActivityTypes = @[UIActivityTypePostToFacebook, UIActivityTypePostToTwitter];
 
             __typeof__(self) __weak selfBlock = self;
 
@@ -1316,9 +1318,9 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 			}
 			else { // iPad
 				UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:self.activityViewController];
-				[popover presentPopoverFromRect:CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height/4, 0, 0)
-										 inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny
-									   animated:YES];
+                [popover presentPopoverFromBarButtonItem:_actionButton
+                                permittedArrowDirections:UIPopoverArrowDirectionDown
+                                                animated:YES];
 			}
         }
         else
